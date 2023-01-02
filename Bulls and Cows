@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string getHint(string s, string g) {
+        map<char,int>mp;
+        map<char,int>mp2;
+        for(int i = 0; i<s.size(); i++){
+            mp[s[i]]++;
+        }
+        for(int i = 0; i<g.size(); i++){
+            mp2[g[i]]++;
+        }
+        int count = 0;
+        for(int i = 0; i<s.size(); i++){
+            if(s[i]==g[i]){
+                mp[s[i]]--;
+                mp2[g[i]]--;
+                count++;
+            }
+        }
+        int count2 = 0;
+        for(auto it:mp){
+            count2+=min(it.second,mp2[it.first]);
+        }
+        
+        string ans = "";
+        ans = to_string(count)+'A'+to_string(count2)+'B';
+        return ans;
+    }
+};
