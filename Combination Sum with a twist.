@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    vector<int>res;
+    void recur(int sum,int n,int i){
+        if(n==0){
+            if(sum==0){
+                ans.push_back(res); 
+            }
+            return;
+        }
+        if(sum==0&&n>0)return;
+        for(int j = i+1; j<=9; j++){
+            if(sum-j>=0){
+                res.push_back(j);
+                recur(sum-j,n-1,j);
+                res.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        recur(n,k,0);
+        return ans;
+    }
+};
