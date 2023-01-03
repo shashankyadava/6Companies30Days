@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int par[100005];
+    int dis[100005];
+    vector<vector<int>>g;
+    void dfs1(int u,int p = 0,int d = 0){
+        dis[u] = d;
+        par[u] = p;
+        for(auto child:g[u]){
+            if(child==p)continue;
+            dfs1(child,u,d+1);
+        }
+    }
+    int dfs2(int u,vector<int> &amount,int p = 0){
+        int maxx = INT_MIN;
+        for(auto child:g[u]){
+            if(child==p)continue;
+            maxx = max(maxx,amount[u]+dfs2(child,amount,u));
+        }
+        if(maxx==INT_MIN)return amount[u];
+        else return maxx;
+    }
+    int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
+        int n = amount.size();
+        g.resize(n,vector<int>());
+        for(int i = 0; i<edges.size(); i++){
+            int x = edges[i][0];
+            int y = edges[i][1];
+            g[x].push_back(y);
+            g[y].push_back(x);
+        }
+        dfs1(0);
+        int curr = bob;
+        int bob_dist = 0;
+        while(curr!=0){
+            if(dis[curr]==bob_dist){
+                amount[curr] = amount[curr]/2;
+            }
+            else if(dis[curr]>bob_dist){
+                amount[curr] = 0;
+            }
+            bob_dist++;
+            curr = par[curr];
+        }
+        return dfs2(0,amount);
+    }
+};
