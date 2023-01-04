@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>nums1(n),nums2(n);
+        int pos1 = INT_MAX,pos2 = INT_MIN;
+        nums1[0] = nums[0]; 
+        for(int i = 1; i<n; i++){
+            nums1[i] = max(nums1[i-1],nums[i]);
+        }
+        nums2[n-1] = nums[n-1];
+        for(int i = n-1; i>=0; i--){
+            if(i+1<n)nums2[i] = min(nums2[i+1],nums[i]);
+            if(nums1[i]!=nums2[i]){
+                pos1 = min(pos1,i);
+                pos2 = max(pos2,i);
+            }
+        }
+        if(pos1==INT_MAX&&pos2==INT_MIN)return 0;
+        else return pos2-pos1+1;
+    }
+};
