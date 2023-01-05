@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int minOperations(vector<int>& v, vector<int>& d) {
+        int num = d[0];
+        for(int i = 1; i<d.size(); i++){
+            num = __gcd(num,d[i]);
+        }
+        //cout<<num<<endl;
+        set<int>st;
+        for(int i = 1; i<=sqrt(num); i++){
+            if(num%i==0){
+                int fact1 = i;
+                int fact2 = num/i;
+                st.insert(fact1);
+                st.insert(fact2);
+            }
+        }
+        int minn = INT_MAX;
+        for(int i = 0; i<v.size(); i++){
+            if(st.find(v[i])!=st.end()){
+                minn = min(minn,v[i]);
+            }
+        }
+        if(minn==INT_MAX)return -1;
+        int count = 0;
+        for(int i = 0; i<v.size(); i++){
+            if(v[i]<minn){
+                count++;
+            }
+        }
+        return count;
+    }
+};
