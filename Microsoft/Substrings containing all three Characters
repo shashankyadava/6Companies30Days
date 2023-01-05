@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int n = s.size();
+        int res = 0;
+        int arr[3] = {0,0,0};
+        int i = 0;
+        for(int j = 0; j<n; j++){
+            arr[s[j]-'a']++;
+            while(i<n&&arr[0]&&arr[1]&&arr[2]){
+                arr[s[i++]-'a']--;
+            }
+            res+=i;
+        }
+        return res;
+    }
+};
