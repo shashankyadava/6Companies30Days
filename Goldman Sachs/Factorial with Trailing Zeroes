@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int count1 = 0,count2 = 0;
+        for(int i = 1; i<=n; i++){
+            int num = i;
+            while(num%2==0){
+                count1++;
+                num = num/2;
+            }
+            while(num%5==0){
+                count2++;
+                num = num/5;
+            }
+        }
+        return min(count1,count2);
+    }
+};
