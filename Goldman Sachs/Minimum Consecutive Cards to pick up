@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minimumCardPickup(vector<int>& v) {
+        int n = v.size();
+        map<int,int>mp;
+        map<int,int>dis;
+        int minn = INT_MAX;
+        for(int i = 0; i<n; i++){
+            if(mp.find(v[i])==mp.end()){
+                mp[v[i]] = i;
+                dis[v[i]] = INT_MAX;
+            }
+            else{
+                if(i-mp[v[i]]+1<dis[v[i]]){
+                    dis[v[i]] = i-mp[v[i]]+1;
+                }
+                mp[v[i]] = i;
+                minn = min(minn,dis[v[i]]);
+            }
+        }
+        return minn==INT_MAX?-1:minn;
+    }
+};
