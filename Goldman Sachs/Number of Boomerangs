@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int dis(int x,int y,int xx,int yy){
+        return (x-xx)*(x-xx)+(y-yy)*(y-yy);
+    }
+    int numberOfBoomerangs(vector<vector<int>>& points) {
+        long long int count = 0;
+        for(int i = 0; i<points.size(); i++){
+            int x = points[i][0];
+            int y = points[i][1];
+            map<int,int>mp;
+            vector<int>res;
+            for(int j = 0; j<points.size(); j++){
+                int xx = points[j][0];
+                int yy = points[j][1];
+                int distance = dis(x,y,xx,yy);
+                mp[distance]++;
+            }
+            for(auto it:mp){
+                count+=(it.second-1)*(it.second);
+            }
+        }
+        return count;
+    }
+};
