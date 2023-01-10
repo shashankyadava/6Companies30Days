@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void recur(TreeNode* root,vector<int>&temp){
+        if(root==NULL)return;
+        recur(root->left,temp);
+        temp.push_back(root->val);
+        recur(root->right,temp);
+    }
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        vector<int>l,r;
+        recur(root1,l);
+        recur(root2,r);
+        vector<int>ans;
+        int x = 0,y = 0;
+        for(int i = 0; i<r.size()+l.size(); i++){
+            if(y<r.size()&&x<l.size()&&l[x]<=r[y]){
+                ans.push_back(l[x]);
+                x++;
+            }
+            else if(x<l.size()&&y<r.size()&&r[y]<l[x]){
+                ans.push_back(r[y]);
+                y++;
+            }
+            else if(x==l.size()&&y<r.size()){
+                ans.push_back(r[y]);
+                y++;
+            }
+            else if(y==r.size()&&x<l.size()){ 
+                ans.push_back(l[x]);
+                x++;
+            }
+        }
+        return ans;
+    }
+};
